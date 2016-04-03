@@ -19,7 +19,7 @@ echo "nproc: $NPROC"
 #################################################################
 # Install all necessary packages for building Gamecredits           #
 #################################################################
-sudo apt-get -y install git build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libminiupnpc-dev libzmq3-dev
+sudo apt-get -y install git unzip wget build-essential libtool autotools-dev autoconf pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev libminiupnpc-dev libzmq3-dev
 sudo add-apt-repository -y ppa:bitcoin/bitcoin
 sudo apt-get update
 sudo apt-get install -y libdb4.8-dev libdb4.8++-dev
@@ -50,6 +50,12 @@ else
 #sudo add-apt-repository -y ppa:gamecredits/gamecredits
 #sudo apt-get update
 #sudo apt-get install -y gamecredits
+cd /usr/local/src/
+DOWNLOADFILE=$(curl -s https://api.github.com/repos/gamecredits-project/GameCredits/releases | grep browser_download_url | grep linux64 | head -n 1 | cut -d '"' -f 4)
+DOWNLOADNAME=$(curl -s https://api.github.com/repos/gamecredits-project/GameCredits/releases | grep name | grep linux64 | head -n 1 | cut -d '"' -f 4)
+sudo wget $DOWNLOADFILE
+sudo unzip $DOWNLOADNAME
+sudo cp gamecreditsd /usr/bin/gamecreditsd
 
 fi
 
